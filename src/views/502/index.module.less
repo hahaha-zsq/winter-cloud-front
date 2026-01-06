@@ -1,0 +1,212 @@
+// Page502.module.less
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
+// 定义变量
+@c-bg: #E0E7FF;
+@c-card: #FFFFFF;
+@c-text: #000000;
+@c-accent-primary: #A855F7;
+@c-accent-secondary: #BEF264;
+@c-accent-alert: #FF4757;
+@border-thick: 4px;
+@shadow-depth: 8px;
+
+// 全局容器背景
+.container {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: @c-bg;
+  background-image: linear-gradient(@c-text 1px, transparent 1px),
+  linear-gradient(90deg, @c-text 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  background-blend-mode: overlay;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+// 字体工具类
+.fontDisplay {
+  font-family: 'Archivo Black', sans-serif;
+}
+
+.fontMono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+// Brutalist Card
+.nbCard {
+  background: @c-card;
+  border: @border-thick solid @c-text;
+  box-shadow: @shadow-depth @shadow-depth 0px 0px @c-text;
+  transition: transform 0.1s;
+}
+
+// Brutalist Button
+.nbBtn {
+  border: @border-thick solid @c-text;
+  font-weight: 700;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0px 0px @c-text;
+  transition: all 0.1s ease;
+  cursor: pointer;
+
+  &:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px @c-text;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: translate(4px, 4px);
+  }
+}
+
+// Custom Toggle Switch
+.nbSwitch {
+  appearance: none;
+  width: 60px;
+  height: 30px;
+  border: 3px solid black;
+  border-radius: 999px;
+  background: #e5e5e5;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: black;
+    border-radius: 50%;
+    transition: left 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  &:checked {
+    background: @c-accent-secondary;
+
+    &::after {
+      left: 32px;
+    }
+  }
+}
+
+// Custom Range Slider
+.nbRange {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 20px;
+  background: #fff;
+  border: 3px solid black;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background: @c-accent-primary;
+    border: 3px solid black;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 black;
+  }
+
+  &::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    background: @c-accent-primary;
+    border: 3px solid black;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 black;
+  }
+}
+
+// Marquee Animation
+.marqueeContainer {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marqueeContent {
+  display: inline-block;
+  animation: scroll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+// Glitch Effect
+.glitchHover {
+  &:hover {
+    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    color: @c-accent-alert;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0)
+  }
+  20% {
+    transform: translate(-2px, 2px)
+  }
+  40% {
+    transform: translate(-2px, -2px)
+  }
+  60% {
+    transform: translate(2px, 2px)
+  }
+  80% {
+    transform: translate(2px, -2px)
+  }
+  100% {
+    transform: translate(0)
+  }
+}
+
+// Loading Bar Animation for Success
+.animateLoadBar {
+  animation: loadBar 2s ease-in-out forwards;
+}
+
+@keyframes loadBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+// Custom Screw Decoration
+// 修复后的代码
+.screw {
+  position: absolute;
+  width: 0.75rem; /* w-3 */
+  height: 0.75rem; /* h-3 */
+  border: 2px solid black; /* border-2 border-black */
+  border-radius: 9999px; /* rounded-full */
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  justify-content: center; /* justify-center */
+
+  div {
+    width: 100%; /* w-full */
+    height: 1px; /* h-[1px] */
+    background-color: black; /* bg-black */
+    transform: rotate(45deg); /* rotate-45 */
+  }
+}

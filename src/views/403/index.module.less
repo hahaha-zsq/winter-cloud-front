@@ -1,0 +1,110 @@
+// 引入字体 (通常建议在 index.html 或全局 CSS 中引入，但为了完整性放在这里)
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Ma+Shan+Zheng&display=swap');
+
+.fontCalligraphy {
+  font-family: 'Ma Shan Zheng', cursive;
+}
+
+.fontSerif {
+  font-family: 'Noto Serif SC', serif;
+}
+
+// 纸张纹理
+.paperTexture {
+  background-color: #fdfbf7;
+}
+
+// 木纹背景
+.woodTexture {
+  background-image: url('../src/assets/wood-pattern.png');
+}
+
+// 水墨扩散动画
+.inkSpot {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: inkSpread 8s infinite ease-out;
+  opacity: 0.1;
+}
+
+@keyframes inkSpread {
+  0% {
+    transform: scale(0);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+// 门震动动画
+.shakeHorizontal {
+  animation: shakeHorizontal 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+}
+
+@keyframes shakeHorizontal {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+// 符咒燃烧发光动画
+.talismanBurn {
+  animation: burn 0.6s ease-out forwards;
+}
+
+@keyframes burn {
+  0% {
+    transform: translateX(-50%) scale(1) rotate(2deg); // 保持基础旋转
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.1) rotate(2deg);
+    filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(5);
+  }
+  100% {
+    transform: translateX(-50%) scale(1) rotate(2deg);
+    filter: brightness(1);
+  }
+}
+
+// 雾气漂移动画
+.fog {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  animation: drift 30s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+// 竖排文字
+.writingVertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
