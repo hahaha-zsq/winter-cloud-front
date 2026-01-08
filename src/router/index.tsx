@@ -7,9 +7,12 @@ import AdminLoader from "@/components/loading";
 import { staticRoutes } from "@/router/staticRouter.tsx";
 import { setGlobalRouter } from "@/router/navigate.ts";
 import { dynamicRoutingApi } from "@/api/menu.ts";
+import { message } from "@/components/antdGlobal";
 
 export const DynamicRouterFC: React.FC = () => {
     const userId = useStore(state => state.userInfo.id);
+    // 获取 actions 以便在出错时清理状态
+    const { actions } = useStore();
     const themeToken = useThemeToken();
 
     const [loading, setLoading] = useState(false);
@@ -25,6 +28,8 @@ export const DynamicRouterFC: React.FC = () => {
         if (!userId) return [];
         try {
             const data = await dynamicRoutingApi(userId);
+            if(!data) return []; // 防空判断
+
             return data
                 .map(menu => {
                     // 建议：打印路径检查是否匹配
@@ -43,14 +48,25 @@ export const DynamicRouterFC: React.FC = () => {
                 .filter((r): r is RouteObject => Boolean(r));
         } catch (error) {
             console.error("加载动态路由失败:", error);
+            // 关键修复：如果接口请求失败（可能是 Token 过期或无权限），
+            // 必须清除当前用户信息，防止刷新页面后再次进入死循环请求
+            // actions.clearUserInfo();
+            message.error("验证失败，请重新登录");
             return [];
         }
     };
 
     /** 构建 Router */
     useEffect(() => {
-        // 如果没有 userId，不执行构建
-        if (!userId) return;
+        // 如果没有 userId，不执行构建，但需要初始化一个基础路由（如登录页）
+        // 这里如果是空状态，通常 staticRouter 已经包含了 login/layout 等基础路由，
+        // 我们仍需创建一个 router 实例给 Provider 使用，否则页面会白屏
+        if (!userId) {
+            const basicRouter = createBrowserRouter(staticRoutes);
+            setGlobalRouter(basicRouter);
+            setRouter(basicRouter);
+            return;
+        }
 
         let isCancelled = false; // 防止竞态条件
         setLoading(true);
@@ -106,7 +122,7 @@ export const DynamicRouterFC: React.FC = () => {
                 </div>
             )}
 
-            {/* ✅ 只有当 router 存在且不处于 loading 状态(可选)时才渲染，防止闪烁或 404 */}
+            {/* ✅ 只有当 router 存在时才渲染，防止闪烁或 404 */}
             {router && <RouterProvider router={router} />}
         </>
     );

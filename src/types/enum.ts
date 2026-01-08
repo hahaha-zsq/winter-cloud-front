@@ -78,6 +78,7 @@ export type PermissionType = typeof PermissionType[keyof typeof PermissionType];
  */
 export const RequestHeaderEnum = {
   AUTHORIZATION: 'Authorization',
+  BEARER: 'Bearer ',
   ACCEPT_LANGUAGE: 'Accept-Language',
   CLIENT_ID: 'X-Client-Id',
   REQUEST_SOURCE: 'X-Request-Source',

@@ -157,7 +157,8 @@ const AuthPageFC: React.FC = () => {
         try {
             const data = await loginApi({ email, password });
             setIsLoading(false);
-            actions.setUserInfo(data)
+            storage.set(StorageEnum.UserInfo, data)
+            // actions.setUserInfo(data)
             showToast(t.msg_login_success, 'success');
             setTimeout(() => {
                 navigate("/layout")

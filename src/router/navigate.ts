@@ -30,6 +30,11 @@ export const navigateTo = (path: string, replace: boolean = false) => {
         globalRouter.navigate(path, { replace });
     } else {
         // 兜底策略：如果 router 还没初始化好，使用原生跳转
-        window.location.href = path;
+        // 修复：防止死循环刷新。如果当前路径已经是目标路径，则不再执行 location.href 赋值
+        if (window.location.pathname !== path) {
+            window.location.href = path;
+        } else {
+            console.warn(`[Navigate] Router not ready and already at ${path}, skipping reload to prevent loop.`);
+        }
     }
 };

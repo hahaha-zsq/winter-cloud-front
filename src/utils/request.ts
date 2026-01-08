@@ -79,7 +79,7 @@ import {
     RequestHeaderEnum,
     RequestSourceEnum,
     ResultCode,
-    ResultMessage
+    ResultMessage, StorageEnum
 } from "@/types/enum.ts"
 
 
@@ -253,14 +253,16 @@ class Request {
                 /**
                  * ② 从本地存储中读取信息
                  */
-                const token = storage.get(RequestHeaderEnum.AUTHORIZATION)
+
+                const token = storage.get(StorageEnum.UserInfo)?.token??""
+                console.log(token)
                 const language = storage.get(RequestHeaderEnum.ACCEPT_LANGUAGE)
 
                 /**
                  * ③ 设置 token
                  */
                 if (token) {
-                    config.headers[RequestHeaderEnum.AUTHORIZATION] = token
+                    config.headers[RequestHeaderEnum.AUTHORIZATION] = RequestHeaderEnum.BEARER+token
                 }
 
                 /**
