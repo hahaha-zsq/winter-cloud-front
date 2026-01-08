@@ -4,6 +4,8 @@ import AuthPage from "@/views/AuthPage";
 import NotFoundFC from "@/views/404";
 import ForbiddenPageFC from "@/views/403";
 import BadGatewayFC from "@/views/502";
+import AdminLoader from "@/components/loading";
+import {DynamicRouterFC} from "@/router";
 
 
 function App() {
@@ -14,8 +16,14 @@ function App() {
                     {/*这个是一个空组件，目的是解决消息组件在js文件中出现不能消费主题token的警告*/}
                     <AntdGlobal/>
                     <div className="h-full" ref={ref}>
-                        {/*<RouterFc/>*/}
-                        <AuthPage/>
+                        {/*<AdminLoader*/}
+                        {/*    theme="light"*/}
+                        {/*    color="#ef4444" // 红色*/}
+                        {/*    text="页面加载中。。。。"*/}
+                        {/*    subText="请稍等..."*/}
+                        {/*/>*/}
+                        <DynamicRouterFC/>
+                        {/*<AuthPage/>*/}
                         {/*<NotFoundFC/>*/}
                         {/*<ForbiddenPageFC/>*/}
                         {/*<BadGatewayFC/>*/}

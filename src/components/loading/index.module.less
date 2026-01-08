@@ -1,0 +1,87 @@
+/* AdminLoader.module.less */
+
+.loaderContainer {
+  position: relative;
+  // 接收 React 传来的 CSS 变量
+  color: var(--primary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  // 默认网格 (兜底)
+  background-size: 30px 30px;
+
+  // 明亮模式下的网格 (深色线条，极低透明度)
+  &[data-theme='light'] {
+    background-image: radial-gradient(#94a3b8 1px, transparent 1px); // slate-400
+  }
+
+  // 暗黑模式下的网格 (浅色线条，极低透明度)
+  &[data-theme='dark'] {
+    background-image: radial-gradient(#334155 1px, transparent 1px); // slate-700
+  }
+}
+
+// 外层虚线环
+.outerRing {
+  border: 1px dashed var(--primary-color);
+  opacity: 0.3; // 使用透明度而不是 hex 颜色，这样适配所有颜色
+  border-radius: 50%;
+  animation: spinSlow 12s linear infinite;
+}
+
+// 中层动态弧线
+.middleArc {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  // 使用当前的主色调
+  border-top-color: var(--primary-color);
+  border-right-color: var(--primary-color);
+  // 使用当前颜色制造光晕
+  box-shadow: 0 0 10px var(--primary-color);
+  // 在亮色模式下减少光晕强度，避免看起来像污渍
+  :global([data-theme='light']) & {
+    box-shadow: 0 0 5px var(--primary-color);
+  }
+  animation: spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+// 内层反向环
+.innerRing {
+  border-radius: 50%;
+  border: 2px solid var(--primary-color);
+  opacity: 0.2;
+  border-left-color: transparent; // 留个缺口
+  animation: spinReverse 3s linear infinite;
+}
+
+// 中心Logo容器
+.centerLogo {
+  animation: pulse 2s ease-in-out infinite;
+  // 边框也跟随主色
+  border: 1px solid var(--primary-color);
+  opacity: 0.8;
+}
+
+// 扫描线光效
+.scanLight {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  // 使用白色混合，保持通用性
+  background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+  );
+  transform: skewX(-20deg);
+  animation: shimmer 3s infinite;
+}
+
+// 动画关键帧保持不变
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes spinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+@keyframes shimmer { 0% { left: -100%; } 50% { left: 200%; } 100% { left: 200%; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(0.95); } }

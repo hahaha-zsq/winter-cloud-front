@@ -138,10 +138,12 @@ const BadGatewayFC: React.FC = () => {
                                     <MdRefresh className="group-hover:rotate-180 transition-transform duration-500 text-xl" />
                                     立即刷新
                                 </button>
-                                <a href="#" className={classNames(styles.nbBtn, "bg-black text-white hover:bg-gray-800 py-4 flex items-center justify-center gap-2 text-center")}>
+                                <button  onClick={() => {
+                                    window.location.href = '/';
+                                }} className={classNames(styles.nbBtn, "bg-black text-white hover:bg-gray-800 py-4 flex items-center justify-center gap-2 text-center")}>
                                     <MdHome className="text-xl" />
                                     返回首页
-                                </a>
+                                </button>
                             </div>
                         </div>
 

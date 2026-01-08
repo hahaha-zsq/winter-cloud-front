@@ -18,6 +18,11 @@ import { BiLoaderAlt } from 'react-icons/bi'; // 这是一个非常好看的 Spi
 
 import styles from './index.module.less';
 import { i18n, type LangKey } from './locales';
+import {loginApi} from "@/api";
+import {useNavigate} from "react-router-dom";
+import storage from "@/utils/storage.ts";
+import {StorageEnum} from "@/types/enum.ts";
+import {useStore} from "@/store";
 
 const bgImage = "src/assets/authPage.png";
 
@@ -30,6 +35,7 @@ const AuthPageFC: React.FC = () => {
     const [lang, setLang] = useState<LangKey>('zh');
     const [view, setView] = useState<ViewState>('login');
     const t = i18n[lang];
+    const navigate = useNavigate()
 
     // 2. Form State
     const [formData, setFormData] = useState({
@@ -47,6 +53,7 @@ const AuthPageFC: React.FC = () => {
     const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
     const [toast, setToast] = useState<ToastState>({ show: false, msg: '', type: 'success' });
     const [countdown, setCountdown] = useState(0);
+    const {actions} = useStore()
 
     // --- Helpers ---
     const togglePass = (field: string) => {
@@ -72,19 +79,25 @@ const AuthPageFC: React.FC = () => {
 
     // --- Validation Logic ---
     const validateField = (name: string, value: string): string | null => {
+        // 1. 定义你提供的正则表达式
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // 密码正则：8-15位，包含大小写字母、数字、特殊字符
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,15}$/;
         switch (name) {
             case 'email':
             case 'resetEmail':
                 if (!value) return t.err_email_empty;
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return t.err_email_invalid;
+                // 使用新的邮箱正则
+                if (!emailRegex.test(value)) return t.err_email_invalid;
                 break;
             case 'password':
                 if (!value) return t.err_password_empty;
-                if (value.length < 8) return t.err_password_length;
+                if (!passwordRegex.test(value)) return t.err_password;
                 break;
             case 'newPassword':
                 if (!value) return t.err_new_password_empty;
-                if (value.length < 8) return t.err_password_length;
+                // 使用新的密码正则
+                if (!passwordRegex.test(value)) return t.err_password;
                 break;
             case 'code':
                 if (!/^\d{6}$/.test(value)) return t.err_code_length;
@@ -120,7 +133,7 @@ const AuthPageFC: React.FC = () => {
         }
     }, [countdown]);
 
-    const handleLogin = (e: FormEvent) => {
+    const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         const newErrors: Record<string, string> = {};
 
@@ -134,12 +147,24 @@ const AuthPageFC: React.FC = () => {
             setErrors(newErrors);
             return;
         }
+        // 方法 A: 直接解构获取
+        const {email, password} = formData;
 
-        setIsLoading(true);
-        setTimeout(() => {
+        // 打印查看
+        console.log('准备提交的登录数据:', {email, password});
+
+
+        try {
+            const data = await loginApi({ email, password });
             setIsLoading(false);
+            actions.setUserInfo(data)
             showToast(t.msg_login_success, 'success');
-        }, 1500);
+            setTimeout(() => {
+                navigate("/layout")
+            }, 1000)
+        } catch (error) {
+            setIsLoading(false);
+        }
     };
 
     const handleReset = (e: FormEvent) => {
@@ -405,7 +430,7 @@ const AuthPageFC: React.FC = () => {
 
             {/* Toast Notification */}
             <div
-                className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 pointer-events-none z-50 flex items-center gap-2 ${toast.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                className={`fixed top-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 pointer-events-none z-50 flex items-center gap-2 ${toast.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
                 {toast.type === 'success' ? (
                     // 使用 FiCheckCircle
