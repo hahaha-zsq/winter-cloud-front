@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
-import {
-    MdDns,
-    MdWarning,
-    MdChecklist,
-    MdRefresh,
-    MdHome,
-    MdRadioButtonUnchecked,
-    MdCheckCircle,
-    MdSchedule,
-    MdCookie
-} from 'react-icons/md';
+// 1. 引入 Icon 组件
+import { Icon } from '@iconify/react';
 import styles from './index.module.less';
 
 const BadGatewayFC: React.FC = () => {
@@ -58,7 +49,6 @@ const BadGatewayFC: React.FC = () => {
 
     return (
         <>
-
             <div className={classNames(styles.container, "selection:bg-purple-500 selection:text-white")}>
 
                 {/* Top Marquee */}
@@ -82,14 +72,16 @@ const BadGatewayFC: React.FC = () => {
                             {/* Header Card */}
                             <div className={classNames(styles.nbCard, "p-8 relative overflow-hidden group")}>
                                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                    <MdDns className="text-9xl" />
+                                    {/* MdDns -> ic:baseline-dns */}
+                                    <Icon icon="ic:baseline-dns" className="text-9xl" />
                                 </div>
 
                                 <div className={classNames(
                                     "inline-flex items-center gap-2 border-2 border-black bg-red-500 text-white px-3 py-1 text-sm font-bold mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
                                     styles.fontMono
                                 )}>
-                                    <MdWarning className="text-sm animate-pulse" />
+                                    {/* MdWarning -> ic:baseline-warning */}
+                                    <Icon icon="ic:baseline-warning" className="text-sm animate-pulse" />
                                     HTTP_STATUS: 502
                                 </div>
 
@@ -109,20 +101,24 @@ const BadGatewayFC: React.FC = () => {
                                 {/* User Checklist */}
                                 <div className="border-t-4 border-black pt-6 mt-6">
                                     <h3 className={classNames("font-bold text-lg mb-4 uppercase flex items-center gap-2", styles.fontMono)}>
-                                        <MdChecklist />
+                                        {/* MdChecklist -> ic:baseline-checklist */}
+                                        <Icon icon="ic:baseline-checklist" />
                                         Troubleshooting / 故障排除
                                     </h3>
                                     <ul className={classNames("space-y-3 text-sm", styles.fontMono)}>
                                         <li className="flex items-start gap-3">
-                                            <MdRefresh className="text-purple-600 text-lg" />
+                                            {/* MdRefresh -> ic:baseline-refresh */}
+                                            <Icon icon="ic:baseline-refresh" className="text-purple-600 text-lg" />
                                             <span><strong>刷新页面：</strong> 很多时候这只是暂时的网络拥堵。</span>
                                         </li>
                                         <li className="flex items-start gap-3">
-                                            <MdCookie className="text-purple-600 text-lg" />
+                                            {/* MdCookie -> ic:baseline-cookie */}
+                                            <Icon icon="ic:baseline-cookie" className="text-purple-600 text-lg" />
                                             <span><strong>清除缓存：</strong> 有时候旧的 Cookie 会导致通信混乱。</span>
                                         </li>
                                         <li className="flex items-start gap-3">
-                                            <MdSchedule className="text-purple-600 text-lg" />
+                                            {/* MdSchedule -> ic:baseline-schedule */}
+                                            <Icon icon="ic:baseline-schedule" className="text-purple-600 text-lg" />
                                             <span><strong>稍后再来：</strong> 我们的运维团队可能正在重启服务。</span>
                                         </li>
                                     </ul>
@@ -135,13 +131,15 @@ const BadGatewayFC: React.FC = () => {
                                     onClick={() => window.location.reload()}
                                     className={classNames(styles.nbBtn, "bg-white hover:bg-gray-100 py-4 flex items-center justify-center gap-2 group")}
                                 >
-                                    <MdRefresh className="group-hover:rotate-180 transition-transform duration-500 text-xl" />
+                                    {/* MdRefresh -> ic:baseline-refresh */}
+                                    <Icon icon="ic:baseline-refresh" className="group-hover:rotate-180 transition-transform duration-500 text-xl" />
                                     立即刷新
                                 </button>
                                 <button  onClick={() => {
                                     window.location.href = '/';
                                 }} className={classNames(styles.nbBtn, "bg-black text-white hover:bg-gray-800 py-4 flex items-center justify-center gap-2 text-center")}>
-                                    <MdHome className="text-xl" />
+                                    {/* MdHome -> ic:baseline-home */}
+                                    <Icon icon="ic:baseline-home" className="text-xl" />
                                     返回首页
                                 </button>
                             </div>
@@ -173,7 +171,8 @@ const BadGatewayFC: React.FC = () => {
 
                                         {/* Connection Line */}
                                         <div className="w-full px-8 flex items-center justify-between relative z-10">
-                                            <MdRadioButtonUnchecked className="text-4xl" />
+                                            {/* MdRadioButtonUnchecked -> ic:baseline-radio-button-unchecked */}
+                                            <Icon icon="ic:baseline-radio-button-unchecked" className="text-4xl" />
 
                                             <div className="flex-grow h-2 bg-gray-300 mx-4 relative overflow-hidden rounded-full">
                                                 <div
@@ -189,7 +188,8 @@ const BadGatewayFC: React.FC = () => {
                                                 ></div>
                                             </div>
 
-                                            <MdDns className={classNames("text-4xl transition-colors duration-300",
+                                            {/* MdDns -> ic:baseline-dns */}
+                                            <Icon icon="ic:baseline-dns" className={classNames("text-4xl transition-colors duration-300",
                                                 (rangeVal === 100 && sw1 && sw2) ? "text-black" : "text-gray-400"
                                             )} />
                                         </div>
@@ -269,7 +269,8 @@ const BadGatewayFC: React.FC = () => {
                                 {/* Success Overlay */}
                                 {success && (
                                     <div className="absolute inset-0 bg-green-400 flex flex-col items-center justify-center z-50 border-4 border-black p-8 text-center animate-in fade-in duration-300">
-                                        <MdCheckCircle className="text-8xl mb-4 animate-bounce" />
+                                        {/* MdCheckCircle -> ic:baseline-check-circle */}
+                                        <Icon icon="ic:baseline-check-circle" className="text-8xl mb-4 animate-bounce" />
                                         <h2 className={classNames("text-4xl mb-2", styles.fontDisplay)}>SYSTEM RESTORED</h2>
                                         <p className={classNames("font-bold text-sm mb-6", styles.fontMono)}>Redirecting to safe channel...</p>
                                         <div className="w-full h-4 border-2 border-black p-0.5 bg-white">

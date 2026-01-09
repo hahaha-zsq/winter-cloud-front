@@ -23,8 +23,8 @@ export type ResultEnum = typeof ResultEnum[keyof typeof ResultEnum];
 
 export const StorageEnum = {
   UserInfo: 'userInfo',
+  Configuration: 'configuration',
   Token: 'token',
-  Settings: 'settings',
   I18N: 'i18nextLng',
 } as const;
 export type StorageEnum = typeof StorageEnum[keyof typeof StorageEnum];
@@ -33,6 +33,7 @@ export type StorageEnum = typeof StorageEnum[keyof typeof StorageEnum];
 export const ThemeMode = {
   Light: 'light',
   Dark: 'dark',
+  Auto: 'auto',
 } as const;
 export type ThemeMode = typeof ThemeMode[keyof typeof ThemeMode];
 
@@ -158,3 +159,17 @@ export const ResultMessage: Record<string, string> = {
   [ResultCode.DISABLED]: '禁用',
   [ResultCode.UNAUTHENTICATED]: '未认证',
 };
+
+/**
+ * @description: 联合国官方语言枚举
+ */
+export const UNLanguagesEnum = {
+  ENGLISH: 'en',
+  SPANISH: 'es',
+  CHINESE: 'zh',
+  FRENCH: 'fr',
+  RUSSIAN: 'ru',
+  ARABIC: 'ar',
+} as const;
+
+export type UNLanguagesEnum = typeof UNLanguagesEnum[keyof typeof UNLanguagesEnum];

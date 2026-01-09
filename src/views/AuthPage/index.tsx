@@ -1,28 +1,13 @@
 import React, { useState, useEffect, type FormEvent } from 'react';
 import dayjs from 'dayjs';
-// 1. 更改引入：使用 react-icons 的 Feather (fi) 和 BoxIcons (bi) 系列
-import {
-    FiMail,
-    FiLock,
-    FiKey,
-    FiEye,
-    FiEyeOff,
-    FiGlobe,
-    FiShield,
-    FiCheckCircle,
-    FiAlertCircle,
-    FiArrowLeft,
-    FiUnlock // 用来替代 LockKeyhole
-} from 'react-icons/fi';
-import { BiLoaderAlt } from 'react-icons/bi'; // 这是一个非常好看的 Spinner
+// 1. 更改引入：使用 @iconify/react
+import { Icon } from '@iconify/react';
 
 import styles from './index.module.less';
 import { i18n, type LangKey } from './locales';
-import {loginApi} from "@/api";
-import {useNavigate} from "react-router-dom";
-import storage from "@/utils/storage.ts";
-import {StorageEnum} from "@/types/enum.ts";
-import {useStore} from "@/store";
+import { loginApi } from "@/api";
+import { useNavigate } from "react-router-dom";
+import { useStore } from "@/store";
 
 const bgImage = "src/assets/authPage.png";
 
@@ -35,7 +20,7 @@ const AuthPageFC: React.FC = () => {
     const [lang, setLang] = useState<LangKey>('zh');
     const [view, setView] = useState<ViewState>('login');
     const t = i18n[lang];
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // 2. Form State
     const [formData, setFormData] = useState({
@@ -53,7 +38,7 @@ const AuthPageFC: React.FC = () => {
     const [showPassword, setShowPassword] = useState<Record<string, boolean>>({});
     const [toast, setToast] = useState<ToastState>({ show: false, msg: '', type: 'success' });
     const [countdown, setCountdown] = useState(0);
-    const {actions} = useStore()
+    const { actions } = useStore();
 
     // --- Helpers ---
     const togglePass = (field: string) => {
@@ -79,15 +64,12 @@ const AuthPageFC: React.FC = () => {
 
     // --- Validation Logic ---
     const validateField = (name: string, value: string): string | null => {
-        // 1. 定义你提供的正则表达式
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        // 密码正则：8-15位，包含大小写字母、数字、特殊字符
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,15}$/;
         switch (name) {
             case 'email':
             case 'resetEmail':
                 if (!value) return t.err_email_empty;
-                // 使用新的邮箱正则
                 if (!emailRegex.test(value)) return t.err_email_invalid;
                 break;
             case 'password':
@@ -96,7 +78,6 @@ const AuthPageFC: React.FC = () => {
                 break;
             case 'newPassword':
                 if (!value) return t.err_new_password_empty;
-                // 使用新的密码正则
                 if (!passwordRegex.test(value)) return t.err_password;
                 break;
             case 'code':
@@ -147,22 +128,18 @@ const AuthPageFC: React.FC = () => {
             setErrors(newErrors);
             return;
         }
-        // 方法 A: 直接解构获取
-        const {email, password} = formData;
+        const { email, password } = formData;
 
-        // 打印查看
-        console.log('准备提交的登录数据:', {email, password});
-
+        console.log('准备提交的登录数据:', { email, password });
 
         try {
             const data = await loginApi({ email, password });
             setIsLoading(false);
-            storage.set(StorageEnum.UserInfo, data)
-            // actions.setUserInfo(data)
+            actions.setUserInfo(data);
             showToast(t.msg_login_success, 'success');
             setTimeout(() => {
-                navigate("/layout")
-            }, 1000)
+                navigate("/layout");
+            }, 1000);
         } catch (error) {
             setIsLoading(false);
         }
@@ -196,10 +173,11 @@ const AuthPageFC: React.FC = () => {
     };
 
     // --- Sub-Components (Input Renderer) ---
+    // 修改点：Icon 参数类型改为 string
     const renderInput = (
         name: keyof typeof formData,
         label: string,
-        IconComponent: React.ElementType,
+        iconName: string,
         type: string = 'text',
         placeholder: string
     ) => {
@@ -215,8 +193,8 @@ const AuthPageFC: React.FC = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                 <div className="relative rounded-md shadow-sm">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        {/* 图标渲染逻辑不变，react-icons 完全兼容 */}
-                        <IconComponent className="h-5 w-5 text-gray-400" />
+                        {/* 修改点：使用 Icon 组件 */}
+                        <Icon icon={iconName} className="h-5 w-5 text-gray-400" />
                     </div>
 
                     <input
@@ -244,11 +222,11 @@ const AuthPageFC: React.FC = () => {
                             className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                             onClick={() => togglePass(name)}
                         >
-                            {isVisible ? (
-                                <FiEye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                            ) : (
-                                <FiEyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                            )}
+                            {/* 修改点：使用 Icon 组件替换 Eye/EyeOff */}
+                            <Icon
+                                icon={isVisible ? "feather:eye" : "feather:eye-off"}
+                                className="h-5 w-5 text-gray-400 hover:text-gray-600"
+                            />
                         </div>
                     )}
                 </div>
@@ -275,8 +253,8 @@ const AuthPageFC: React.FC = () => {
                     onClick={() => setLang(l => l === 'en' ? 'zh' : 'en')}
                     className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1f4cb8] transition-colors items-center"
                 >
-                    {/* 使用 FiGlobe */}
-                    <FiGlobe className="mr-2 h-4 w-4" />
+                    {/* FiGlobe -> feather:globe */}
+                    <Icon icon="feather:globe" className="mr-2 h-4 w-4" />
                     {lang === 'en' ? 'English' : '中文'}
                 </button>
             </div>
@@ -303,8 +281,8 @@ const AuthPageFC: React.FC = () => {
                     {/* Mobile Logo */}
                     <div className="md:hidden flex justify-center mb-6">
                         <div className="h-12 w-12 bg-[#1f4cb8] rounded-xl flex items-center justify-center shadow-lg">
-                            {/* 使用 FiShield */}
-                            <FiShield className="text-white h-8 w-8" />
+                            {/* FiShield -> feather:shield */}
+                            <Icon icon="feather:shield" className="text-white h-8 w-8" />
                         </div>
                     </div>
 
@@ -317,9 +295,9 @@ const AuthPageFC: React.FC = () => {
                             </div>
 
                             <form onSubmit={handleLogin} className="space-y-6">
-                                {/* 2. 使用新引入的图标组件 */}
-                                {renderInput('email', t.label_email, FiMail, 'email', 'admin@system.com')}
-                                {renderInput('password', t.label_password, FiLock, 'password', '••••••••')}
+                                {/* 2. 传递图标字符串名称 */}
+                                {renderInput('email', t.label_email, 'feather:mail', 'email', 'admin@system.com')}
+                                {renderInput('password', t.label_password, 'feather:lock', 'password', '••••••••')}
 
                                 <div className="flex items-center justify-end">
                                     <button
@@ -340,8 +318,8 @@ const AuthPageFC: React.FC = () => {
                                     className={primaryButtonClass}
                                 >
                                     {isLoading ? (
-                                        // 使用 BiLoaderAlt
-                                        <BiLoaderAlt className="animate-spin h-5 w-5" />
+                                        // BiLoaderAlt -> bx:loader-alt
+                                        <Icon icon="bx:loader-alt" className="animate-spin h-5 w-5" />
                                     ) : t.btn_sign_in}
                                 </button>
                             </form>
@@ -357,15 +335,15 @@ const AuthPageFC: React.FC = () => {
                             </div>
 
                             <form onSubmit={handleReset} className="space-y-5">
-                                {renderInput('resetEmail', t.label_email, FiMail, 'email', 'admin@system.com')}
+                                {renderInput('resetEmail', t.label_email, 'feather:mail', 'email', 'admin@system.com')}
 
                                 <div className="form-group">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">{t.label_verification_code}</label>
                                     <div className="flex gap-2">
                                         <div className="relative flex-grow">
                                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                {/* 使用 FiKey */}
-                                                <FiKey className="h-5 w-5 text-gray-400" />
+                                                {/* FiKey -> feather:key */}
+                                                <Icon icon="feather:key" className="h-5 w-5 text-gray-400" />
                                             </div>
                                             <input
                                                 name="code"
@@ -392,9 +370,9 @@ const AuthPageFC: React.FC = () => {
                                     {errors.code && <p className="mt-1 text-xs text-red-500">{errors.code}</p>}
                                 </div>
 
-                                {/* 使用 FiUnlock 和 FiLock */}
-                                {renderInput('newPassword', t.label_new_password, FiUnlock, 'password', '••••••••')}
-                                {renderInput('confirmPassword', t.label_confirm_password, FiLock, 'password', '••••••••')}
+                                {/* FiUnlock -> feather:unlock, FiLock -> feather:lock */}
+                                {renderInput('newPassword', t.label_new_password, 'feather:unlock', 'password', '••••••••')}
+                                {renderInput('confirmPassword', t.label_confirm_password, 'feather:lock', 'password', '••••••••')}
 
                                 <div className="pt-2">
                                     <button
@@ -402,7 +380,7 @@ const AuthPageFC: React.FC = () => {
                                         disabled={isLoading}
                                         className={primaryButtonClass}
                                     >
-                                        {isLoading ? <BiLoaderAlt className="animate-spin h-5 w-5" /> : t.btn_reset_password}
+                                        {isLoading ? <Icon icon="bx:loader-alt" className="animate-spin h-5 w-5" /> : t.btn_reset_password}
                                     </button>
                                 </div>
                             </form>
@@ -415,8 +393,8 @@ const AuthPageFC: React.FC = () => {
                                     }}
                                     className="flex items-center justify-center w-full text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors gap-2"
                                 >
-                                    {/* 使用 FiArrowLeft */}
-                                    <FiArrowLeft className="h-5 w-5" />
+                                    {/* FiArrowLeft -> feather:arrow-left */}
+                                    <Icon icon="feather:arrow-left" className="h-5 w-5" />
                                     <span>{t.link_back_to_login}</span>
                                 </button>
                             </div>
@@ -434,11 +412,11 @@ const AuthPageFC: React.FC = () => {
                 className={`fixed top-5 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 pointer-events-none z-50 flex items-center gap-2 ${toast.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             >
                 {toast.type === 'success' ? (
-                    // 使用 FiCheckCircle
-                    <FiCheckCircle className="text-green-400 h-6 w-6" />
+                    // FiCheckCircle -> feather:check-circle
+                    <Icon icon="feather:check-circle" className="text-green-400 h-6 w-6" />
                 ) : (
-                    // 使用 FiAlertCircle
-                    <FiAlertCircle className="text-red-400 h-6 w-6" />
+                    // FiAlertCircle -> feather:alert-circle
+                    <Icon icon="feather:alert-circle" className="text-red-400 h-6 w-6" />
                 )}
                 <span>{toast.msg}</span>
             </div>

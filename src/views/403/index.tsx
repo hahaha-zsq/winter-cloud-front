@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { MdTempleBuddhist, MdKeyboardReturn } from 'react-icons/md';
+// 1. 更改引入：使用 @iconify/react
+import { Icon } from '@iconify/react';
 import styles from './index.module.less';
 
 // 模拟图片资源路径 (请确保 public 文件夹下有对应的图片，或替换为真实 URL)
-const MOUNTAIN_BG = "src/assets/mountain.png"; // 这里建议使用真实的图片URL或导入
+const MOUNTAIN_BG = "src/assets/mountain.png";
 
 const KNOCK_MESSAGES = [
     "门后传来沉闷的回响，但无人应答。",
@@ -193,7 +194,8 @@ const ForbiddenPageFC: React.FC = () => {
                     >
                         <div className="absolute inset-0 w-full h-full bg-stone-700 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
                         <div className="relative flex items-center gap-2 font-medium tracking-widest">
-                            <MdTempleBuddhist className="text-xl" />
+                            {/* MdTempleBuddhist -> ic:baseline-temple-buddhist */}
+                            <Icon icon="ic:baseline-temple-buddhist" className="text-xl" />
                             <span>御剑回城 (返回首页)</span>
                         </div>
                     </button>
@@ -203,7 +205,8 @@ const ForbiddenPageFC: React.FC = () => {
                         className="group relative px-8 py-3 bg-transparent border-2 border-stone-800 text-stone-800 rounded overflow-hidden hover:bg-stone-800 hover:text-[#f0ece2] transition-colors duration-300"
                     >
                         <div className="relative flex items-center gap-2 font-medium tracking-widest">
-                            <MdKeyboardReturn className="text-xl" />
+                            {/* MdKeyboardReturn -> ic:baseline-keyboard-return */}
+                            <Icon icon="ic:baseline-keyboard-return" className="text-xl" />
                             <span>且退一步 (返回上一页)</span>
                         </div>
                     </button>

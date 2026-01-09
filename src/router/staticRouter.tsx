@@ -8,7 +8,7 @@ import LayoutFC from "@/layout";
 export const staticRoutes: RouteObject[] = [
     {
         id: "layout",
-        path: "/layout",
+        path: "/",
         element: <LayoutFC/>,
         children: [
 
@@ -16,7 +16,7 @@ export const staticRoutes: RouteObject[] = [
     },
     {
         id: "facade",
-        path: "/",
+        path: "/login",
         element: <AuthPageFC />,
     },
     { path: "/404", element: <NotFoundFC/> },

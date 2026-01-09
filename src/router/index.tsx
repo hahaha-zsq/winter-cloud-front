@@ -12,7 +12,6 @@ import { message } from "@/components/antdGlobal";
 export const DynamicRouterFC: React.FC = () => {
     const userId = useStore(state => state.userInfo.id);
     // 获取 actions 以便在出错时清理状态
-    const { actions } = useStore();
     const themeToken = useThemeToken();
 
     const [loading, setLoading] = useState(false);
@@ -22,7 +21,7 @@ export const DynamicRouterFC: React.FC = () => {
     const modules = import.meta.glob(
         ["../views/**/*.tsx", "../views/**/*.jsx"]
     ) as Record<string, () => Promise<any>>;
-
+    console.log(modules)
     /** 加载动态路由 */
     const loadDynamicRoutes = async (): Promise<RouteObject[]> => {
         if (!userId) return [];
@@ -34,7 +33,7 @@ export const DynamicRouterFC: React.FC = () => {
                 .map(menu => {
                     // 建议：打印路径检查是否匹配
                     const path = `../views${menu.filePath}/${menu.component}`;
-
+                    console.log(path)
                     if (!modules[path]) {
                         console.warn(`[Router] Component not found: ${path}`);
                         return null;
@@ -88,7 +87,7 @@ export const DynamicRouterFC: React.FC = () => {
                 });
 
                 const newRouter = createBrowserRouter(fullRoutes);
-
+                console.log("fullRoutes", fullRoutes)
                 // 只有当路由真正建立时才更新状态
                 setGlobalRouter(newRouter);
                 setRouter(newRouter);

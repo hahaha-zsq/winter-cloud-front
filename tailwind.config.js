@@ -9,15 +9,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                // buddha: ["Buddha"],
-                // fish: ["Fish"],
-                // sb: ["HuXiaoBao-SaoBao"],
-                // ns: ["HuXiaoBao-NanSheng"],
-                // zs: ["HuXiaoBao-ZhengShuai"],
-                // stone: ["Stone"],
-                // xl: ["XiaoLai"],
-                // alimaDL: ["AlimamaDaoLi"],
-                // alimaLD: ["AlimamaAgile"],
+                buddha: ["Buddha"],
+                fish: ["Fish"],
+                sb: ["HuXiaoBao-SaoBao"],
+                ns: ["HuXiaoBao-NanSheng"],
+                zs: ["HuXiaoBao-ZhengShuai"],
+                stone: ["Stone"],
+                xl: ["XiaoLai"],
+                alimaDL: ["AlimamaDaoLi"],
+                alimaLD: ["AlimamaAgile"],
             },
             screens: {
                 xs: '480px',

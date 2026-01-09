@@ -1,0 +1,22 @@
+<svg width="1003" height="93" xmlns="http://www.w3.org/2000/svg" stroke="null" class="show_show__wrapper__graphic__5Waiy " xml:space="preserve" version="1.1" transform="scale(1)">
+ <title stroke="null">React</title>
+	<defs>
+  <filter id="border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3" height="150%" width="150%" x="-25%" y="-25%">
+   <feGaussianBlur in="thicken" stdDeviation="3" result="blurred"/>
+  </filter>
+ </defs>
+	<g>
+  <title>Layer 1</title>
+		<polygon stroke="#8aaafb" fill="transparent" points="           600, 30 584, 11           578, 11 597, 34         " id="svg_3"/>
+		<polygon stroke="#8aaafb" fill="transparent" points="           360, 30 377, 49           383, 49 363, 26         " id="svg_4"/>
+		<polygon stroke="#8aaafb" fill="rgba(31,51,162,0.3)" filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" points="601,44 580,18 385,18 373,30 395,56 590,56 " id="svg_5"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" points="           345, 37 324, 37           330, 46 351, 46         " id="svg_6"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" opacity="1" points="           315, 37 294, 37           300, 46 321, 46         " id="svg_7"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" opacity="1" points="           285, 37 264, 37           270, 46 291, 46         " id="svg_8"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" points="           635, 37 614, 37           608, 46 629, 46         " id="svg_9"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" opacity="1" points="           665, 37 644, 37           638, 46 659, 46         " id="svg_10"/>
+		<polygon filter="url(#border-box-11-filterId-ebf0e00a79a04a1dac47ffc7b1f09ac3)" fill="#8aaafb" opacity="1" points="           695, 37 674, 37           668, 46 689, 46         " id="svg_11"/>
+		<text class="dv-border-box-11-title" x="480" y="32" fill="#fff" font-size="18" text-anchor="middle" dominant-baseline="middle" id="svg_12"/>
+		<polygon fill="#8aaafb"  points="           7, 366.5 11, 370.5           11, 446.5 7, 450.5         " id="svg_13"/>
+ </g>
+</svg>

@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { BsSnow2 } from "react-icons/bs";
-import { RiCpuLine } from 'react-icons/ri';
+import { Icon } from '@iconify/react';
 import styles from './index.module.less';
 
 interface AdminLoaderProps {
@@ -68,7 +67,8 @@ const AdminLoader: React.FC<AdminLoaderProps> = ({
                     className={`relative z-10 p-4 rounded-full shadow-sm transition-colors duration-300 ${themeClasses.cardBg} ${styles.centerLogo}`}
                 >
                     {/* 图标颜色直接继承 CSS 变量 */}
-                    <BsSnow2 className="text-4xl" style={{ color: 'var(--primary-color)' }} />
+                    {/* BsSnow2 -> bs:snow2 */}
+                    <Icon icon="bs:snow2" className="text-4xl" style={{ color: 'var(--primary-color)' }} />
 
                     {/* 扫光特效 */}
                     <div className="pointer-events-none overflow-hidden absolute inset-0 rounded-full">
@@ -84,7 +84,8 @@ const AdminLoader: React.FC<AdminLoaderProps> = ({
                 </h2>
 
                 <div className={`flex items-center space-x-2 text-sm ${themeClasses.textSecondary}`}>
-                    <RiCpuLine className="animate-pulse" />
+                    {/* RiCpuLine -> ri:cpu-line */}
+                    <Icon icon="ri:cpu-line" className="animate-pulse" />
                     <span className="tracking-wide uppercase text-xs">{subText}</span>
                 </div>
             </div>

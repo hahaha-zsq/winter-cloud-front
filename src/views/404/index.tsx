@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { FaRocket } from 'react-icons/fa';
-import { MdRadar } from 'react-icons/md';
+// 1. 更改引入：使用 @iconify/react
+import { Icon } from '@iconify/react';
 import classNames from 'classnames';
 import styles from './index.module.less';
 
@@ -290,11 +290,12 @@ const NotFoundFC: React.FC = () => {
                                 onClick={handleReturn}
                                 className="group relative px-8 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-full font-bold transition-all duration-300 shadow-[0_0_20px_rgba(8,145,178,0.4)] hover:shadow-[0_0_30px_rgba(8,145,178,0.6)] flex items-center justify-center gap-2 overflow-hidden"
                             >
-                <span className={classNames(
-                    "absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-none",
-                    styles.shimmerEffect
-                )}></span>
-                                <FaRocket className="text-xl" />
+                                <span className={classNames(
+                                    "absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-none",
+                                    styles.shimmerEffect
+                                )}></span>
+                                {/* FaRocket -> fa:rocket */}
+                                <Icon icon="fa:rocket" className="text-xl" />
                                 <span>返回地球</span>
                             </button>
 
@@ -302,7 +303,8 @@ const NotFoundFC: React.FC = () => {
                                 onClick={handleWarp}
                                 className="px-8 py-3 bg-transparent border border-slate-500 hover:border-purple-400 hover:text-purple-300 rounded-full font-semibold transition-all duration-300 flex items-center justify-center gap-2"
                             >
-                                <MdRadar className="text-xl" />
+                                {/* MdRadar -> ic:baseline-radar */}
+                                <Icon icon="ic:baseline-radar" className="text-xl" />
                                 <span>扫描星区</span>
                             </button>
                         </div>
@@ -311,9 +313,9 @@ const NotFoundFC: React.FC = () => {
                         <div className="pt-6 border-t border-slate-700/50 flex justify-between items-center text-xs text-slate-500 font-mono">
                             <span>ERR_CODE: UNIVERSE_NOT_FOUND</span>
                             <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                SIGNAL LOST
-              </span>
+                                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                                SIGNAL LOST
+                            </span>
                         </div>
                     </div>
                 </div>

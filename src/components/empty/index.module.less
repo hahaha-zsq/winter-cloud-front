@@ -1,0 +1,35 @@
+// EmptyStateDecor.module.less
+
+.illustrationWrapper {
+  // 主体浮动
+  animation: float 5s ease-in-out infinite;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    // 解决某些浏览器下的边缘模糊问题
+    overflow: visible;
+  }
+}
+
+// 装饰物的呼吸/闪烁效果
+.decorationItem {
+  animation: twinkle 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+// 给不同的装饰物加上延迟，不要让它们同时闪烁，显得自然
+.delay1 { animation-delay: 0.5s; }
+.delay2 { animation-delay: 1.5s; }
+.delay3 { animation-delay: 1s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
